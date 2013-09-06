@@ -9,9 +9,21 @@ class StoryHandler(tornado.web.RequestHandler):
     def get(self, story_id):
         self.write("You requested the story %s" % story_id )
 
+class MyFormHandler(tornado.web.RequestHandler):
+    def get(self):
+        self.write('<html><body><form action="/myform" method="post">'
+                   '<input type="text" name="message">'
+                   '<input type="submit" value="submit">'
+                   '</form></bory></html>')
+
+    def post(self):
+        self.set_header("Content-Type", "text/plain")
+        self.write("You worte " + self.get_argument("message"))
+
 application = tornado.web.Application([
     (r"/", MainHandler),
     (r"/story/([0-9]+)", StoryHandler),
+    (r"/myform", MyFormHandler)
 ])
 
 if __name__ == "__main__":
