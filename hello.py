@@ -18,7 +18,13 @@ class MyFormHandler(tornado.web.RequestHandler):
 
     def post(self):
         self.set_header("Content-Type", "text/plain")
-        self.write("You worte " + self.get_argument("message"))
+#        self.write("You worte " + self.get_argument("message"))
+        self.redirect('/some-canonical-page', permanent=Ture)
+
+#application = tornado.wsgi.WSGIApplication([
+#    (r"/([a-z]*)", ContentHandler),
+#    (r"/static/tornado-0.2.tar.gz", tornado.web.RedirectHandler,
+#    dict(url="https://github/downloads/facsbook/tornado/tornado-0.2.tar.gz")),], **settings)
 
 application = tornado.web.Application([
     (r"/", MainHandler),
