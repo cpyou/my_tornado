@@ -4,23 +4,15 @@ import tornado.options
 import os
 from tornado.options import options, define
 from sqlalchemy.orm import scoped_session, sessionmaker
-from mod.databases.db import engine, init_db
-
-from article import DbHandler
-
-
-class IndexHandler(tornado.web.RequestHandler):
-    def get(self):
-        self.render('index.html')
+from core.db import engine, init_db
+import logging
+from handlers import handlers
 
 
 class Application(tornado.web.Application):
 
     def __init__(self):
-        handlers = [
-            (r"/", IndexHandler),
-            (r"/db", DbHandler),
-        ]
+
         settings = dict(
             debug=True,
             static_path=os.path.join(os.path.dirname(__file__), "static"),
@@ -31,9 +23,14 @@ class Application(tornado.web.Application):
                                               autocommit=False, autoflush=True,
                                               expire_on_commit=False))
 
-if __name__ == '__main__':
+
+def main():
     define("port", default=8000, help="run on the given port", type=int)
     tornado.options.parse_command_line()
     init_db()
     Application().listen(options.port, address='127.0.0.1')
+    logging.info("running on 127.0.0.1:%s", options.port)
     tornado.ioloop.IOLoop.instance().start()
+
+if __name__ == '__main__':
+    main()

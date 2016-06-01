@@ -2,6 +2,7 @@ import tornado.web
 
 
 class BaseController(tornado.web.RequestHandler):
+    _url = ''
 
     def data_received(self, chunk):
         pass

@@ -1,6 +1,6 @@
 from sqlalchemy import Column, String, Integer, VARCHAR,ForeignKey, Float
 from sqlalchemy.orm import relationship,backref
-from db import engine,Base
+from core.db import engine, Base
 
 
 class Article(Base):
