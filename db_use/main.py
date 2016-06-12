@@ -27,6 +27,8 @@ class Application(tornado.web.Application):
 def main():
     define("port", default=8000, help="run on the given port", type=int)
     tornado.options.parse_command_line()
+    config_file_path = './db_use.conf'
+    tornado.options.parse_config_file(config_file_path)
     init_db()
     Application().listen(options.port, address='127.0.0.1')
     logging.info("running on 127.0.0.1:%s", options.port)
